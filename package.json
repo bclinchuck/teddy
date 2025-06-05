@@ -4,12 +4,25 @@
   "description": "active liveness detection prototype",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "ts-node source/server.ts", /*"node index.js", */
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "brandon linchuck {bclinchuck@gmail.com}",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "express": "^5.1.0",
+    "lodash": "^4.17.21",
+    "typescript": "^5.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bclinchuck/teddy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bclinchuck/teddy/issues"
+  },
+  "homepage": "https://github.com/bclinchuck/teddy#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.2"
   }
 }
