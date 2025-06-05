@@ -1,0 +1,15 @@
+{
+  "name": "teddy",
+  "version": "1.0.0",
+  "description": "active liveness detection prototype",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "brandon linchuck {bclinchuck@gmail.com}",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
