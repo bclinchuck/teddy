@@ -4,15 +4,18 @@
   "description": "active liveness detection prototype",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node source/server.ts", /*"node index.js", */
+    "start": "node dist/index.js",
+    "startalt": "ts-node source/server.ts",
+    "build": "npx tsc",
+    "dev": "npx tsc -w & nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "brandon linchuck {bclinchuck@gmail.com}",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^22.15.30",
     "express": "^5.1.0",
-    "lodash": "^4.17.21",
-    "typescript": "^5.8.3"
+    "lodash": "^4.17.21"
   },
   "repository": {
     "type": "git",
@@ -23,6 +26,10 @@
   },
   "homepage": "https://github.com/bclinchuck/teddy#readme",
   "devDependencies": {
-    "@types/express": "^5.0.2"
-  }
+    "@types/express": "^5.0.2",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "keywords": []
 }
