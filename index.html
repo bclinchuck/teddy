@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ping Test</title>
+</head>
+<body>
+
+    <h1>Ping Test</h1>
+    <button onclick="sendPing()">Send Ping</button>
+    <p id="response"></p>
+    <script>            
+    function sendPing () {
+        fetch('/ping')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('response').textContent=`Response: ${data}`;
+            })
+            .catch(error => {
+                document.getElementById('response').textContent=`Error: ${error}`;
+            });
+        }
+    </script>
+</body>
+</html>
