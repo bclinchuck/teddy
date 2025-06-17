@@ -4,12 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
 const port = 3000;
-app.use(express_1.default.static(__dirname));
-app.get('/ping', (req, res) => {
-    res.send('pong');
+const app = (0, express_1.default)();
+app.get("/ping", (req, res) => {
+    res.status(200).send("pong");
 });
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Listening on port ${port}`);
 });
