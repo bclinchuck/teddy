@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Ping Test</title>
+</head>
+<body>
+    <h1>Ping Test</h1>
+    <button onclick="sendPing()">Send Ping</button>
+    <p id="response"></p>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>    
+    const socket = io();
+
+    function sendPing () {
+        socket.emit('pingFromClient');
+    }
+    socket.on('pongFromServer', (msg) => {
+        document.getElementById('response').textContent = `Response: ${msg}`;
+    });
+    </script>
+</body>
+</html>
