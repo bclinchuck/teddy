@@ -7,15 +7,18 @@
     "start": "node dist/index.js",
     "build": "npx tsc",
     "dev": "npx ts-node server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "brandon linchuck {bclinchuck@gmail.com}",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.15.30",
     "express": "^5.1.0",
+    "jest": "^30.0.3",
     "lodash": "^4.17.21",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "ts-jest": "^29.4.0"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
   },
   "homepage": "https://github.com/bclinchuck/teddy#readme",
   "devDependencies": {
+    "@biomejs/biome": "^1.5.0",
     "@types/express": "^5.0.3",
     "@types/socket.io": "^3.0.1",
     "nodemon": "^3.1.10",
