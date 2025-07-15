@@ -1,40 +1,43 @@
 {
-  "name": "teddy",
-  "version": "1.0.0",
-  "description": "active liveness detection prototype",
-  "main": "index.js",
+	"name": "teddy",
+	"version": "1.0.0",
+	"description": "active liveness detection prototype",
+	"main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
     "build": "npx tsc",
     "dev": "npx ts-node server.ts",
-    "test": "jest"
+    "test": "jest",
+    "lint": "biome check server.ts index.ts",
+    "lint:fix": "biome check \"*.ts\" --apply",
+    "format": "biome format . --write"
   },
-  "author": "brandon linchuck {bclinchuck@gmail.com}",
-  "license": "ISC",
-  "dependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^22.15.30",
-    "express": "^5.1.0",
-    "jest": "^30.0.3",
-    "lodash": "^4.17.21",
-    "socket.io": "^4.8.1",
-    "ts-jest": "^29.4.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bclinchuck/teddy.git"
-  },
-  "bugs": {
-    "url": "https://github.com/bclinchuck/teddy/issues"
-  },
-  "homepage": "https://github.com/bclinchuck/teddy#readme",
-  "devDependencies": {
-    "@biomejs/biome": "^1.5.0",
-    "@types/express": "^5.0.3",
-    "@types/socket.io": "^3.0.1",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  },
-  "keywords": []
+	"author": "brandon linchuck {bclinchuck@gmail.com}",
+	"license": "ISC",
+	"dependencies": {
+		"@types/jest": "^30.0.0",
+		"@types/node": "^22.15.30",
+		"express": "^5.1.0",
+		"jest": "^30.0.3",
+		"lodash": "^4.17.21",
+		"socket.io": "^4.8.1",
+		"ts-jest": "^29.4.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bclinchuck/teddy.git"
+	},
+	"bugs": {
+		"url": "https://github.com/bclinchuck/teddy/issues"
+	},
+	"homepage": "https://github.com/bclinchuck/teddy#readme",
+	"devDependencies": {
+		"@biomejs/biome": "^1.5.0",
+		"@types/express": "^5.0.3",
+		"@types/socket.io": "^3.0.1",
+		"nodemon": "^3.1.10",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.3"
+	},
+	"keywords": []
 }

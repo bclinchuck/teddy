@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gesture Liveness Detection</title>
+</head>
+<body>
+  <h1>Gesture Liveness Detection</h1>
+  <h2 id="gesturePrompt"></h2> 
+  <video id="video" autoplay playsinline width="640" height="480" style="border:1px solid black;"></video>
+
+  <script type="module">
+    import Human from 'https://cdn.jsdelivr.net/npm/@vladmandic/human@latest/dist/human.esm.js';
+
+    async function run() {
+      const allGestures = ['thumbs up', 'open palm', 'facing left', 'facing right', 'head up', 'blink left eye', 'blink right eye', 'index up', 'pinky up'];
+
+      for (let i = allGestures.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allGestures[i], allGestures[j]] = [allGestures[j], allGestures[i]];
+      }
+
+      const gesturesSequence = allGestures.slice(0, 5);
+
+
+      let currentStep = 0;
+
+      const promptEl = document.getElementById('gesturePrompt');
+      promptEl.textContent = `Please perform: ${gesturesSequence[currentStep]}`;
+
+      const human = new Human({
+        modelBasePath: 'https://cdn.jsdelivr.net/npm/@vladmandic/human/models',
+        gesture: { enabled: true },
+      });
+
+      await human.load();
+      await human.warmup();
+
+      const video = document.getElementById('video');
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+
+        await new Promise((resolve) => {
+          video.onloadedmetadata = () => {
+            video.play();
+            resolve();
+          };
+        });
+      } catch (e) {
+        console.error('Error accessing camera:', e);
+        return;
+      }
+      let lastMatched = false;
+
+      async function detectLoop() {
+        if (currentStep >= gesturesSequence.length) {
+          promptEl.textContent = '✅ All gestures completed!';
+          return;
+        }
+
+        const result = await human.detect(video);
+        const detectedGestures = result.gesture?.map(g => g.gesture) || [];
+        const expected = gesturesSequence[currentStep];
+
+        console.log(`Expecting: ${expected}`);
+        console.log('Detected:', detectedGestures);
+
+        if (detectedGestures.includes(expected)) {
+          if (!lastMatched) {
+            console.log(`Match found for: ${expected}`);
+            currentStep++;
+            lastMatched = true;
+
+            if (currentStep < gesturesSequence.length) {
+              promptEl.textContent = `➡️ Please perform: ${gesturesSequence[currentStep]}`;
+            } else {
+              promptEl.textContent = '✅ All gestures completed!';
+            }
+          }
+        } else {
+          lastMatched = false;
+        }
+
+        setTimeout(detectLoop, 500);
+      }
+
+      detectLoop();
+    }
+
+    run();
+  </script>
+</body>
+</html>
