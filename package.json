@@ -1,40 +1,49 @@
 {
-  "name": "teddy",
-  "version": "1.0.0",
-  "description": "active liveness detection prototype",
-  "main": "index.js",
-  "scripts": {
-    "start": "node dist/index.js",
-    "build": "npx tsc",
-    "dev": "npx ts-node server.ts",
-    "test": "jest"
-  },
-  "author": "brandon linchuck {bclinchuck@gmail.com}",
-  "license": "ISC",
-  "dependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^22.15.30",
-    "express": "^5.1.0",
-    "jest": "^30.0.3",
-    "lodash": "^4.17.21",
-    "socket.io": "^4.8.1",
-    "ts-jest": "^29.4.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bclinchuck/teddy.git"
-  },
-  "bugs": {
-    "url": "https://github.com/bclinchuck/teddy/issues"
-  },
-  "homepage": "https://github.com/bclinchuck/teddy#readme",
-  "devDependencies": {
-    "@biomejs/biome": "^1.5.0",
-    "@types/express": "^5.0.3",
-    "@types/socket.io": "^3.0.1",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  },
-  "keywords": []
+	"name": "teddy",
+	"version": "1.0.0",
+	"description": "active liveness detection prototype",
+	"main": "index.js",
+	"scripts": {
+		"dev": "ts-node src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"test": "jest"
+	},
+	"author": "brandon linchuck {bclinchuck@gmail.com}",
+	"license": "ISC",
+	"dependencies": {
+		"@koush/wrtc": "^0.5.3",
+		"@tensorflow/tfjs-backend-cpu": "^4.22.0",
+		"@tensorflow/tfjs-backend-webgl": "^4.22.0",
+		"@tensorflow/tfjs-converter": "^4.22.0",
+		"@tensorflow/tfjs-core": "^4.22.0",
+		"@tensorflow/tfjs-node": "^4.22.0",
+		"@types/jest": "^30.0.0",
+		"@types/node": "^22.15.30",
+		"@vladmandic/human": "^3.3.5",
+		"express": "^5.1.0",
+		"jest": "^30.0.3",
+		"lodash": "^4.17.21",
+		"simple-peer": "^9.11.1",
+		"socket.io": "^4.8.1",
+		"ts-jest": "^29.4.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bclinchuck/teddy.git"
+	},
+	"bugs": {
+		"url": "https://github.com/bclinchuck/teddy/issues"
+	},
+	"homepage": "https://github.com/bclinchuck/teddy#readme",
+	"devDependencies": {
+		"@biomejs/biome": "^1.5.0",
+		"@types/express": "^5.0.3",
+		"@types/simple-peer": "^9.11.8",
+		"@types/socket.io": "^3.0.1",
+		"nodemon": "^3.1.10",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.3"
+	},
+	"keywords": []
 }

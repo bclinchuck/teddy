@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es2016",                                 
-    "module": "commonjs",
-    "outDir": "./dist",
+    "lib": ["ES2021", "DOM", "DOM.Iterable", "WebWorker", "esnext"],
+    "moduleResolution": "node",
+    "target": "ES2020",
+    "module": "CommonJS",
+    "rootDir": "src",
+    "outDir": "dist",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true
+    "strict": true
   }
 }

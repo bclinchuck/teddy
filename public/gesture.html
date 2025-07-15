@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gesture Liveness Detection</title>
+</head>
+<body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+  </script>
+
+  <h1>Gesture Liveness Detection</h1>
+  <h2 id="gesturePrompt"></h2>
+
+  <!-- Video element for displaying webcam stream -->
+  <video id="video" autoplay playsinline width="640" height="480" style="border:1px solid black;"></video>
+
+  <script type="module">
+    import Human from 'https://cdn.jsdelivr.net/npm/@vladmandic/human@latest/dist/human.esm.js';
+
+    async function run() {
+      const allGestures = [
+        { gesture: 'thumbs up', prompt: 'Give a thumbs up' },
+        { gesture: 'open palm', prompt: 'Show your open palm' },
+        { gesture: 'facing left', prompt: 'Turn your head to the left' },
+        { gesture: 'facing right', prompt: 'Turn your head to the right' },
+        { gesture: 'head up', prompt: 'Look up' },
+        { gesture: 'blink left eye', prompt: 'Blink your left eye' },
+        { gesture: 'blink right eye', prompt: 'Blink your right eye' },
+        { gesture: 'index up', prompt: 'Hold up your index finger' },
+        { gesture: 'pinky up', prompt: 'Hold up your pinky finger' },
+      ];
+
+      // Shuffle gestures
+      for (let i = allGestures.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allGestures[i], allGestures[j]] = [allGestures[j], allGestures[i]];
+      }
+      const gesturesSequence = allGestures.slice(0, 5);
+
+      let currentStep = 0;
+      const promptEl = document.getElementById('gesturePrompt');
+      promptEl.textContent = `Please perform: ${gesturesSequence[currentStep].prompt}`;
+
+      const human = new Human({
+        modelBasePath: 'https://cdn.jsdelivr.net/npm/@vladmandic/human/models',
+        gesture: { enabled: true },
+      });
+
+      await human.load();
+      await human.warmup();
+
+      const video = document.getElementById('video');
+
+      // Wait for the global webcamStream from client.js
+      async function waitForStream() {
+        while (!window.webcamStream) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        return window.webcamStream;
+      }
+
+      try {
+        const stream = await waitForStream();
+        video.srcObject = stream;
+
+        await new Promise((resolve) => {
+          video.onloadedmetadata = () => {
+            video.play();
+            resolve();
+          };
+        });
+      } catch (e) {
+        console.error('Error accessing camera:', e);
+        return;
+      }
+
+      let lastMatched = false;
+
+      async function detectLoop() {
+        if (currentStep >= gesturesSequence.length) {
+          promptEl.textContent = '✅ All gestures completed!';
+          return;
+        }
+
+        const result = await human.detect(video);
+        const detectedGestures = result.gesture?.map((g) => g.gesture) || [];
+        const expected = gesturesSequence[currentStep].gesture;
+
+        console.log(`Expecting: ${expected}`);
+        console.log('Detected:', detectedGestures);
+
+        if (detectedGestures.includes(expected)) {
+          if (!lastMatched) {
+            console.log(`Match found for: ${expected}`);
+            socket.emit('gestureMatched', expected);
+            currentStep++;
+            lastMatched = true;
+
+            if (currentStep < gesturesSequence.length) {
+              promptEl.textContent = `Please perform: ${gesturesSequence[currentStep].prompt}`;
+            } else {
+              promptEl.textContent = '✅ All gestures completed!';
+            }
+          }
+        } else {
+          lastMatched = false;
+        }
+
+        setTimeout(detectLoop, 50);
+      }
+
+      detectLoop();
+    }
+
+    run();
+  </script>
+</body>
+</html>
